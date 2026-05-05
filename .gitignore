@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Compiled class file
 *.class
 
@@ -22,3 +23,28 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+=======
+# Maven
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# Jenv
+.java-version
+
+# Eclipse
+.settings/
+.classpath
+.project
+
+# IntelliJ IDEA
+.idea
+*.iml
+
+# Visual Studio Code
+.factorypath
+
+# Branch switching
+generated/
+
+**/.DS_Store
+>>>>>>> 9a76b4e34cd75f3d6bfa6f15775bf996c59e8989
