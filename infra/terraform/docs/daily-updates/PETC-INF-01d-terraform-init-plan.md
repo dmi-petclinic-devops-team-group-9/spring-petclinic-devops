@@ -92,7 +92,7 @@ Terraform will perform the following actions:
   # azurerm_resource_group.rg will be created
   + resource "azurerm_resource_group" "rg" {
       + id       = (known after apply)
-      + location = "eastus"
+      + location = "westeurope"
       + name     = "rg-petclinic11-dev"
     }
 
@@ -100,7 +100,7 @@ Terraform will perform the following actions:
   + resource "azurerm_container_registry" "acr" {
       + admin_enabled       = false
       + id                  = (known after apply)
-      + location            = "eastus"
+      + location            = "westeurope"
       + login_server        = (known after apply)
       + name                = "petclinic11acr"
       + resource_group_name = "rg-petclinic11-dev"
@@ -110,7 +110,7 @@ Terraform will perform the following actions:
   # azurerm_log_analytics_workspace.law will be created
   + resource "azurerm_log_analytics_workspace" "law" {
       + id                  = (known after apply)
-      + location            = "eastus"
+      + location            = "westeurope"
       + name                = "law-petclinic11-dev"
       + resource_group_name = "rg-petclinic11-dev"
       + retention_in_days   = 30
