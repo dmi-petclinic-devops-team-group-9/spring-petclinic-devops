@@ -22,7 +22,7 @@ resource "azurerm_log_analytics_workspace" "law" {
   retention_in_days   = 30
 }
 
-# ── Azure Kubernetes Service ───────────────────────────────────
+## ── Azure Kubernetes Service Cluster ────────────────────────────────────
 resource "azurerm_kubernetes_cluster" "aks" {
   name                = "aks-${var.project_prefix}-dev"
   location            = azurerm_resource_group.rg.location
@@ -36,14 +36,14 @@ resource "azurerm_kubernetes_cluster" "aks" {
   identity {
     type = "SystemAssigned"
   }
-  monitor_metrics {} # BUG-1 FIX: replaces deprecated oms_agent block
+  monitor_metrics {} # FIX: replaces deprecated oms_agent block
   network_profile {
     network_plugin    = "kubenet"
     load_balancer_sku = "standard"
   }
 }
 
-# ── Allow AKS to pull from ACR ─────────────────────────────────
+## ── Allow AKS to pull from ACR ─────────────────────────────────
 resource "azurerm_role_assignment" "aks_acr_pull" {
   scope                = azurerm_container_registry.acr.id
   role_definition_name = "AcrPull"
