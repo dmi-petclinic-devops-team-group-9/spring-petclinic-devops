@@ -10,7 +10,8 @@ resource "azurerm_container_registry" "acr" {
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   sku                 = "Basic"
-  admin_enabled       = false   # false is correct for AKS role-based pull
+infra/PETC-INF-02-terraform-aks-cluster
+  admin_enabled       = false # false is correct for AKS role-based pull
 }
 
 # ── Azure Log Analytics Workspace ──────────────────────────────
@@ -22,7 +23,8 @@ resource "azurerm_log_analytics_workspace" "law" {
   retention_in_days   = 30
 }
 
-# ── Azure Kubernetes Service ───────────────────────────────────
+infra/PETC-INF-02-terraform-aks-cluster
+## ── Azure Kubernetes Service Cluster ────────────────────────────────────
 resource "azurerm_kubernetes_cluster" "aks" {
   name                = "aks-${var.project_prefix}-dev"
   location            = azurerm_resource_group.rg.location
@@ -36,14 +38,16 @@ resource "azurerm_kubernetes_cluster" "aks" {
   identity {
     type = "SystemAssigned"
   }
-  monitor_metrics {} # BUG-1 FIX: replaces deprecated oms_agent block
+infra/PETC-INF-02-terraform-aks-cluster
+  monitor_metrics {} # FIX: replaces deprecated oms_agent block
   network_profile {
     network_plugin    = "kubenet"
     load_balancer_sku = "standard"
   }
 }
 
-# ── Allow AKS to pull from ACR ─────────────────────────────────
+infra/PETC-INF-02-terraform-aks-cluster
+## ── Allow AKS to pull from ACR ─────────────────────────────────
 resource "azurerm_role_assignment" "aks_acr_pull" {
   scope                = azurerm_container_registry.acr.id
   role_definition_name = "AcrPull"

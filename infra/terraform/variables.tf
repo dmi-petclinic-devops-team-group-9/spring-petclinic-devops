@@ -12,6 +12,6 @@ variable "node_count" {
 }
 variable "node_vm_size" {
   type    = string
-<<<<<<< HEAD
+infra/PETC-INF-02-terraform-aks-cluster
   default = "Standard_B2s_v2"
 }
