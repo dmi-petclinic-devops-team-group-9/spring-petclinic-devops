@@ -1,6 +1,7 @@
 output "resource_group_name" {
   value = azurerm_resource_group.rg.name
 }
+infra/PETC-INF-02-terraform-aks-cluster
 output "acr_login_server" {
   value = azurerm_container_registry.acr.login_server
 }
