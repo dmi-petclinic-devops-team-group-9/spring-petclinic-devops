@@ -36,7 +36,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   identity {
     type = "SystemAssigned"
   }
-  monitor_metrics {}   # BUG-1 FIX: replaces deprecated oms_agent block
+  monitor_metrics {} # BUG-1 FIX: replaces deprecated oms_agent block
   network_profile {
     network_plugin    = "kubenet"
     load_balancer_sku = "standard"
