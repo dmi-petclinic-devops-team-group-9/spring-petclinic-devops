@@ -10,7 +10,7 @@ resource "azurerm_container_registry" "acr" {
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   sku                 = "Basic"
-  admin_enabled       = false   # false is correct for AKS role-based pull
+  admin_enabled       = false # false is correct for AKS role-based pull
 }
 
 # ── Azure Log Analytics Workspace ──────────────────────────────
@@ -36,7 +36,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   identity {
     type = "SystemAssigned"
   }
-  monitor_metrics {}   # BUG-1 FIX: replaces deprecated oms_agent block
+  monitor_metrics {} # BUG-1 FIX: replaces deprecated oms_agent block
   network_profile {
     network_plugin    = "kubenet"
     load_balancer_sku = "standard"

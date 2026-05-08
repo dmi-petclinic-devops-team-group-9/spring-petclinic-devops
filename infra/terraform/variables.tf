@@ -12,5 +12,5 @@ variable "node_count" {
 }
 variable "node_vm_size" {
   type    = string
-  default = "Standard_B2s_v2"  
+  default = "Standard_B2s_v2"
 }
