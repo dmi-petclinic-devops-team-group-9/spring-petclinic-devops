@@ -10,7 +10,7 @@ resource "azurerm_container_registry" "acr" {
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   sku                 = "Basic"
-  admin_enabled       = false # false is correct for AKS role-based pull
+  admin_enabled       = false   # false is correct for AKS role-based pull
 }
 
 # ── Azure Log Analytics Workspace ──────────────────────────────
