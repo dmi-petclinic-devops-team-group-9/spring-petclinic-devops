@@ -39,3 +39,34 @@ Chapter 11 — Monitoring, QA Testing, and Final Demo Engineer
 - Run JMeter load test and verify Grafana counters
 - Check Zipkin traces for full request chain
 - Set up Azure Monitor alert for CrashLoopBackOff
+
+---
+
+## Date: 09-May-2026
+
+### Jira Task ID
+PETC-107, PETC-207, PETC-307, PETC-407, PETC-507, PETC-607, PETC-707, PETC-807
+
+### Chapter / Role
+Chapter 11 — Monitoring & QA Engineer
+
+### Work Completed Today
+- Installed JMeter 2.13 — ready for load testing
+- Installed kubectl v1.35.4 — ready to connect to AKS
+- Confirmed Azure CLI 2.86.0 is up to date
+- Installed Helm v4.1.4 — ready for AKS port-forwarding
+- All monitoring tools are installed and verified on local machine
+- Machine is fully ready to execute monitoring tasks once AKS is deployed
+
+### Files Updated
+- docs/daily-updates/osman-monitoring-qa-engineer.md
+
+### Blockers
+- Still waiting for Oladayo to complete AKS deployment
+- Still waiting for Pradeep to finish Terraform apply
+
+### Next Plan
+- Connect to AKS cluster once Oladayo shares credentials
+- Port-forward Spring Boot Admin and verify all 8 services show UP
+- Port-forward Prometheus and verify all targets show State=UP
+- Run JMeter load test and verify Grafana counters
