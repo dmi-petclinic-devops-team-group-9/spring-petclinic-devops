@@ -1,0 +1,72 @@
+configServer:
+  replicaCount: 1
+  image:
+    repository: petclinic11acr.azurecr.io/spring-petclinic-config-server
+    tag: latest
+  service:
+    port: 8888
+    type: ClusterIP
+
+discoveryServer:
+  replicaCount: 1
+  image:
+    repository: petclinic11acr.azurecr.io/spring-petclinic-discovery-server
+    tag: latest
+  service:
+    port: 8761
+    type: ClusterIP
+
+apiGateway:
+  replicaCount: 1
+  image:
+    repository: petclinic11acr.azurecr.io/spring-petclinic-api-gateway
+    tag: latest
+  service:
+    port: 8080
+    type: LoadBalancer
+
+customersService:
+  replicaCount: 1
+  image:
+    repository: petclinic11acr.azurecr.io/spring-petclinic-customers-service
+    tag: latest
+  service:
+    port: 8081
+    type: ClusterIP
+
+vetsService:
+  replicaCount: 1
+  image:
+    repository: petclinic11acr.azurecr.io/spring-petclinic-vets-service
+    tag: latest
+  service:
+    port: 8083
+    type: ClusterIP
+
+visitsService:
+  replicaCount: 1
+  image:
+    repository: petclinic11acr.azurecr.io/spring-petclinic-visits-service
+    tag: latest
+  service:
+    port: 8082
+    type: ClusterIP
+
+genaiService:
+  replicaCount: 1
+  image:
+    repository: petclinic11acr.azurecr.io/spring-petclinic-genai-service
+    tag: latest
+  service:
+    port: 8084
+    type: ClusterIP
+
+adminServer:
+  replicaCount: 1
+  image:
+    repository: petclinic11acr.azurecr.io/spring-petclinic-admin-server
+    tag: latest
+  service:
+    port: 9090
+    type: ClusterIP
+
