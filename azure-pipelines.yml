@@ -3,14 +3,12 @@ trigger:
     include:
       - main
       - develop
-      - devops
 
 pr:
   branches:
     include:
       - main
       - develop
-      - devops
 
 variables:
   azureServiceConnection: 'azure-service-connection'
@@ -35,35 +33,31 @@ stages:
   displayName: 'Build and Test All Microservices'
 
   jobs:
-    - job: BuildAndTest
-      displayName: 'Compile → Test → Package'
+  - job: BuildAndTest
+    displayName: 'Compile → Test → Package'
 
-      steps:
+    steps:
+    - task: JavaToolInstaller@0
+      inputs:
+        versionSpec: '17'
+        jdkArchitectureOption: 'x64'
+        jdkSourceOption: 'PreInstalled'
 
-        - task: JavaToolInstaller@0
-          displayName: 'Install Java 17'
-          inputs:
-            versionSpec: '17'
-            jdkArchitectureOption: 'x64'
-            jdkSourceOption: 'PreInstalled'
+    - task: Cache@2
+      inputs:
+        key: 'maven | "$(Agent.OS)" | **/pom.xml'
+        path: $(MAVEN_CACHE_FOLDER)
 
-        - task: Cache@2
-          displayName: 'Cache Maven Dependencies'
-          inputs:
-            key: 'maven | "$(Agent.OS)" | **/pom.xml'
-            path: $(MAVEN_CACHE_FOLDER)
+    - script: |
+        chmod +x mvnw
+        ./mvnw clean install
+      displayName: 'Maven Build and Test'
 
-        - script: |
-            chmod +x mvnw
-            ./mvnw clean install
-          displayName: 'Maven Build and Test'
-
-        - task: PublishTestResults@2
-          displayName: 'Publish Test Results'
-          condition: always()
-          inputs:
-            testResultsFormat: 'JUnit'
-            testResultsFiles: '**/target/surefire-reports/TEST-*.xml'
+    - task: PublishTestResults@2
+      condition: always()
+      inputs:
+        testResultsFormat: 'JUnit'
+        testResultsFiles: '**/target/surefire-reports/TEST-*.xml'
 
 
 # =========================
@@ -74,82 +68,73 @@ stages:
 
   dependsOn: Build_Test
 
-  condition: or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Build.SourceBranch'], 'refs/heads/devops'))
+  condition: or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
 
   jobs:
-    - job: DockerBuild
-      displayName: 'Docker Build and Push'
+  - job: DockerBuild
+    displayName: 'Docker Build and Push'
 
-      steps:
+    steps:
+    - task: JavaToolInstaller@0
+      inputs:
+        versionSpec: '17'
+        jdkArchitectureOption: 'x64'
+        jdkSourceOption: 'PreInstalled'
 
-        - task: JavaToolInstaller@0
-          displayName: 'Install Java 17'
-          inputs:
-            versionSpec: '17'
-            jdkArchitectureOption: 'x64'
-            jdkSourceOption: 'PreInstalled'
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: '$(azureServiceConnection)'
+        scriptType: bash
+        scriptLocation: inlineScript
+        inlineScript: |
+          az acr login --name $(acrName)
 
-        - task: AzureCLI@2
-          displayName: 'Login to Azure Container Registry'
-          inputs:
-            azureSubscription: '$(azureServiceConnection)'
-            scriptType: bash
-            scriptLocation: inlineScript
-            inlineScript: |
-              az acr login --name $(acrName)
-
-        - script: |
-            chmod +x mvnw
-
-            ./mvnw clean install \
-              -Dmaven.test.skip=true \
-              -P buildDocker \
-              -Ddocker.image.prefix=$(imagePrefix) \
-              -Dcontainer.build.extraarg="--push" \
-              -Dcontainer.platform="linux/amd64"
-
-          displayName: 'Build and Push Docker Images'
+    - script: |
+        chmod +x mvnw
+        ./mvnw clean install -Dmaven.test.skip=true -P buildDocker \
+          -Ddocker.image.prefix=$(imagePrefix) \
+          -Dcontainer.build.extraarg="--push" \
+          -Dcontainer.platform="linux/amd64"
+      displayName: 'Build and Push Docker Images'
 
 
 # =========================
-# DEPLOY TO AKS USING HELM
+# DEPLOY TO AKS
 # =========================
 - stage: Deploy_AKS
   displayName: 'Deploy to AKS using Helm'
 
   dependsOn: Docker_Push
 
-  condition: or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Build.SourceBranch'], 'refs/heads/devops'))
+  condition: or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
 
   jobs:
-    - job: Deploy
-      displayName: 'Deploy Application to AKS'
+  - job: Deploy
+    displayName: 'Deploy Application to AKS'
 
-      steps:
+    steps:
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: '$(azureServiceConnection)'
+        scriptType: bash
+        scriptLocation: inlineScript
+        inlineScript: |
 
-        - task: AzureCLI@2
-          displayName: 'Connect to AKS and Deploy Helm Chart'
-          inputs:
-            azureSubscription: '$(azureServiceConnection)'
-            scriptType: bash
-            scriptLocation: inlineScript
-            inlineScript: |
+          az aks get-credentials \
+            --resource-group $(resourceGroup) \
+            --name $(aksName) \
+            --overwrite-existing
 
-              az aks get-credentials \
-                --resource-group $(resourceGroup) \
-                --name $(aksName) \
-                --overwrite-existing
+          kubectl create namespace $(namespace) \
+            --dry-run=client -o yaml | kubectl apply -f -
 
-              kubectl create namespace $(namespace) \
-                --dry-run=client -o yaml | kubectl apply -f -
+          helm upgrade --install petclinic ./helm/petclinic \
+            --namespace $(namespace) \
+            --set global.imageRegistry=$(imagePrefix) \
+            --set global.imageTag=$(imageTag)
 
-              helm upgrade --install petclinic ./helm/petclinic \
-                --namespace $(namespace) \
-                --set global.imageRegistry=$(imagePrefix) \
-                --set global.imageTag=latest
+          kubectl rollout status deployment/api-gateway \
+            -n $(namespace) \
+            --timeout=10m
 
-              kubectl rollout status deployment/api-gateway \
-                -n $(namespace) \
-                --timeout=10m
-
-              kubectl get svc -n $(namespace)
+          kubectl get svc -n $(namespace)
