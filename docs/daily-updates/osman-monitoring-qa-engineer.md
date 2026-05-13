@@ -69,3 +69,28 @@ Chapter 11 — Monitoring & QA Engineer
 ### Next Plan
 - Continue SCRUM-146 (PETC-307) — Monitor api-gateway + end-to-end QA
 - Deploy Prometheus, Grafana, Zipkin once Yinusa action
+
+---
+
+## Date: 13-May-2026
+
+### Jira Task ID
+SCRUM-146 (PETC-307)
+
+### Chapter / Role
+Chapter 11 — Monitoring & QA Engineer
+
+### Work Completed Today
+- Moved SCRUM-146 to Sprint 2
+- api-gateway confirmed UP in Spring Boot Admin
+- Partially completed QA checklist — PetClinic app accessible at http://20.31.145.111
+- Owners list, Owner detail page and Vet list verified
+- Updated all 4 subtasks in Jira with comments and screenshots
+
+### Blockers
+- Prometheus/Grafana not deployed — PETC-307b blocked
+- Zipkin not deployed — PETC-307c blocked
+- Full QA checklist pending domain name from Oladayo
+
+### Next Plan
+- Continue SCRUM-151 (PETC-407) — Monitor customers-service + QA CRUD
