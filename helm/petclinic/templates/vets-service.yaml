@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vets-service
+  labels:
+    app: vets-service
+    tier: backend
+    environment: dev
+spec:
+  replicas: {{ .Values.vetsService.replicaCount }}
+  selector:
+    matchLabels:
+      app: vets-service
+  template:
+    metadata:
+      labels:
+        app: vets-service
+        tier: backend
+    spec:
+      containers:
+      - name: vets-service
+        image: "{{ .Values.vetsService.image.repository }}:{{ .Values.vetsService.image.tag }}"
+        ports:
+        - containerPort: {{ .Values.vetsService.service.port }}
+
+
+        # SERVICE COMMUNICATION
+        env:
+        - name: SPRING_CLOUD_CONFIG_URI
+          value: http://config-server:8888
+
+        - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+          value: http://discovery-server:8761/eureka
+
+      
+        # HEALTH CHECKS
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: {{ .Values.vetsService.service.port }}
+          initialDelaySeconds: 40
+          periodSeconds: 10
+
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: {{ .Values.vetsService.service.port }}
+          initialDelaySeconds: 70
+          periodSeconds: 15
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vets-service
+  labels:
+    app: vets-service
+    tier: backend
+spec:
+  selector:
+    app: vets-service
+  ports:
+    - port: {{ .Values.vetsService.service.port }}
+      targetPort: {{ .Values.vetsService.service.port }}
+  type: ClusterIP
