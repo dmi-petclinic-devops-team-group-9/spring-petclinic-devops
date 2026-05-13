@@ -48,3 +48,5 @@ generated/
 
 **/.DS_Store
 >>>>>>> 9a76b4e34cd75f3d6bfa6f15775bf996c59e8989
+.env
+*.env

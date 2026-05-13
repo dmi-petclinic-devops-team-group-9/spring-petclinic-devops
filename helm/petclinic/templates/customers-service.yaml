@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customers-service
+  labels:
+    app: customers-service
+    tier: backend
+    environment: dev
+spec:
+  replicas: {{ .Values.customersService.replicaCount }}
+  selector:
+    matchLabels:
+      app: customers-service
+  template:
+    metadata:
+      labels:
+        app: customers-service
+        tier: backend
+    spec:
+      containers:
+      - name: customers-service
+        image: "{{ .Values.customersService.image.repository }}:{{ .Values.customersService.image.tag }}"
+        ports:
+        - containerPort: {{ .Values.customersService.service.port }}
+
+        # SERVICE COMMUNICATION
+        env:
+        - name: SPRING_CLOUD_CONFIG_URI
+          value: http://config-server:8888
+
+        - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+          value: http://discovery-server:8761/eureka
+
+        - name: SPRING_DATASOURCE_URL
+          value: jdbc:hsqldb:mem:testdb
+
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: {{ .Values.customersService.service.port }}
+          initialDelaySeconds: 40
+          periodSeconds: 10
+
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: {{ .Values.customersService.service.port }}
+          initialDelaySeconds: 70
+          periodSeconds: 15
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: customers-service
+  labels:
+    app: customers-service
+    tier: backend
+spec:
+  selector:
+    app: customers-service
+  ports:
+    - port: {{ .Values.customersService.service.port }}
+      targetPort: {{ .Values.customersService.service.port }}
+  type: ClusterIP
