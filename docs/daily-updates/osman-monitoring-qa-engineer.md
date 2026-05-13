@@ -161,3 +161,27 @@ Chapter 11 — Monitoring & QA Engineer
 
 ### Next Plan
 - Continue SCRUM-176 (PETC-707) — Monitor genai-service
+
+---
+
+## Date: 13-May-2026
+
+### Jira Task ID
+SCRUM-176 (PETC-707)
+
+### Chapter / Role
+Chapter 11 — Monitoring & QA Engineer
+
+### Work Completed Today
+- Moved SCRUM-176 to Sprint 2
+- genai-service confirmed UP in Spring Boot Admin
+- Tested GenAI chatbot — returns "Chat is currently unavailable. Please try again later."
+- Raised issue with Olanrewaju Awe (GenAI Engineer)
+- Updated all 3 subtasks in Jira with comments and screenshots
+
+### Blockers
+- GenAI chatbot not working — PETC-707b and PETC-707c blocked
+- Pending Olanrewaju to fix genai-service
+
+### Next Plan
+- Continue SCRUM-180 (PETC-807) — Full monitoring stack + Azure Monitor alerts
