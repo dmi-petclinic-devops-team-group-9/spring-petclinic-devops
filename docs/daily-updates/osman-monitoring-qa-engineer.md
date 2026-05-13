@@ -94,3 +94,26 @@ Chapter 11 — Monitoring & QA Engineer
 
 ### Next Plan
 - Continue SCRUM-151 (PETC-407) — Monitor customers-service + QA CRUD
+
+---
+
+## Date: 13-May-2026
+
+### Jira Task ID
+SCRUM-151 (PETC-407)
+
+### Chapter / Role
+Chapter 11 — Monitoring & QA Engineer
+
+### Work Completed Today
+- Moved SCRUM-151 to Sprint 2
+- customers-service confirmed UP in Spring Boot Admin
+- PetClinic app accessible at http://20.31.145.111
+- Updated all 5 subtasks in Jira with comments and screenshots
+
+### Blockers
+- Grafana not deployed — PETC-407e blocked
+- Full CRUD QA checklist pending domain name from Oladayo
+
+### Next Plan
+- Continue SCRUM-162 (PETC-507) — Monitor vets-service
