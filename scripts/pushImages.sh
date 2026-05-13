@@ -1,9 +1,27 @@
 #!/bin/bash
-docker push ${REPOSITORY_PREFIX}/spring-petclinic-config-server:${VERSION}
-docker push ${REPOSITORY_PREFIX}/spring-petclinic-discovery-server:${VERSION}
-docker push ${REPOSITORY_PREFIX}/spring-petclinic-api-gateway:${VERSION}
-docker push ${REPOSITORY_PREFIX}/spring-petclinic-visits-service:${VERSION}
-docker push ${REPOSITORY_PREFIX}/spring-petclinic-vets-service:${VERSION}
-docker push ${REPOSITORY_PREFIX}/spring-petclinic-customers-service:${VERSION}
-docker push ${REPOSITORY_PREFIX}/spring-petclinic-admin-server:${VERSION}
-docker push ${REPOSITORY_PREFIX}/spring-petclinic-genai-service:${VERSION}
+ACR="petclinic11acr.azurecr.io"
+ACR_PREFIX="${ACR}/petclinic"
+
+SERVICES=(
+  "spring-petclinic-admin-server"
+  "spring-petclinic-api-gateway"
+  "spring-petclinic-config-server"
+  "spring-petclinic-customers-service"
+  "spring-petclinic-discovery-server"
+  "spring-petclinic-genai-service"
+  "spring-petclinic-vets-service"
+  "spring-petclinic-visits-service"
+)
+
+echo "Logging in to ACR..."
+az acr login --name petclinic11acr
+
+for svc in "${SERVICES[@]}"; do
+  IMAGE="${ACR_PREFIX}/${svc}:latest"
+  echo "Pushing: ${IMAGE}"
+  docker push "$IMAGE"
+  echo "  ✓ Done"
+done
+
+echo ""
+az acr repository list --name petclinic11acr --output table

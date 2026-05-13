@@ -1,6 +1,6 @@
 services:
   config-server:
-    image: springcommunity/spring-petclinic-config-server
+    image: petclinic11acr.azurecr.io/petclinic/spring-petclinic-config-server
     container_name: config-server
     deploy:
       resources:
@@ -16,7 +16,7 @@ services:
      - 8888:8888
 
   discovery-server:
-    image: springcommunity/spring-petclinic-discovery-server
+    image: petclinic11acr.azurecr.io/petclinic/spring-petclinic-discovery-server
     container_name: discovery-server
     deploy:
       resources:
@@ -35,7 +35,7 @@ services:
      - 8761:8761
 
   customers-service:
-    image: springcommunity/spring-petclinic-customers-service
+    image: petclinic11acr.azurecr.io/petclinic/spring-petclinic-customers-service
     container_name: customers-service
     deploy:
       resources:
@@ -50,7 +50,7 @@ services:
     - 8081:8081
 
   visits-service:
-    image: springcommunity/spring-petclinic-visits-service
+    image: petclinic11acr.azurecr.io/petclinic/spring-petclinic-visits-service
     container_name: visits-service
     deploy:
       resources:
@@ -65,7 +65,7 @@ services:
      - 8082:8082
 
   vets-service:
-    image: springcommunity/spring-petclinic-vets-service
+    image: petclinic11acr.azurecr.io/petclinic/spring-petclinic-vets-service
     container_name: vets-service
     deploy:
       resources:
@@ -81,7 +81,7 @@ services:
 
 
   genai-service:
-    image: springcommunity/spring-petclinic-genai-service
+    image: petclinic11acr.azurecr.io/petclinic/spring-petclinic-genai-service
     container_name: genai-service
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
@@ -101,7 +101,7 @@ services:
 
 
   api-gateway:
-    image: springcommunity/spring-petclinic-api-gateway
+    image: petclinic11acr.azurecr.io/petclinic/spring-petclinic-api-gateway
     container_name: api-gateway
     deploy:
       resources:
@@ -126,7 +126,7 @@ services:
      - 9411:9411
 
   admin-server:
-    image: springcommunity/spring-petclinic-admin-server
+    image: petclinic11acr.azurecr.io/petclinic/spring-petclinic-admin-server
     container_name: admin-server
     deploy:
       resources:

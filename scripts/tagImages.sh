@@ -1,9 +1,20 @@
 #!/bin/bash
-docker tag ${REPOSITORY_PREFIX}/spring-petclinic-config-server ${REPOSITORY_PREFIX}/spring-petclinic-config-server:${VERSION}
-docker tag ${REPOSITORY_PREFIX}/spring-petclinic-discovery-server ${REPOSITORY_PREFIX}/spring-petclinic-discovery-server:${VERSION}
-docker tag ${REPOSITORY_PREFIX}/spring-petclinic-api-gateway ${REPOSITORY_PREFIX}/spring-petclinic-api-gateway:${VERSION}
-docker tag ${REPOSITORY_PREFIX}/spring-petclinic-visits-service ${REPOSITORY_PREFIX}/spring-petclinic-visits-service:${VERSION}
-docker tag ${REPOSITORY_PREFIX}/spring-petclinic-vets-service ${REPOSITORY_PREFIX}/spring-petclinic-vets-service:${VERSION}
-docker tag ${REPOSITORY_PREFIX}/spring-petclinic-customers-service ${REPOSITORY_PREFIX}/spring-petclinic-customers-service:${VERSION}
-docker tag ${REPOSITORY_PREFIX}/spring-petclinic-admin-server ${REPOSITORY_PREFIX}/spring-petclinic-admin-server:${VERSION}
-docker tag ${REPOSITORY_PREFIX}/spring-petclinic-genai-service ${REPOSITORY_PREFIX}/spring-petclinic-genai-service:${VERSION}
+ACR="petclinic11acr.azurecr.io"
+ACR_PREFIX="${ACR}/petclinic"
+TAG=${1:-latest}
+
+SERVICES=(
+  "spring-petclinic-admin-server"
+  "spring-petclinic-api-gateway"
+  "spring-petclinic-config-server"
+  "spring-petclinic-customers-service"
+  "spring-petclinic-discovery-server"
+  "spring-petclinic-genai-service"
+  "spring-petclinic-vets-service"
+  "spring-petclinic-visits-service"
+)
+
+for svc in "${SERVICES[@]}"; do
+  docker tag "${ACR_PREFIX}/${svc}:latest" "${ACR_PREFIX}/${svc}:${TAG}"
+  echo "  ✓ Tagged: ${ACR_PREFIX}/${svc}:${TAG}"
+done
