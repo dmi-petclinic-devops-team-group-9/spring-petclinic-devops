@@ -117,3 +117,24 @@ Chapter 11 — Monitoring & QA Engineer
 
 ### Next Plan
 - Continue SCRUM-162 (PETC-507) — Monitor vets-service
+
+---
+
+## Date: 13-May-2026
+
+### Jira Task ID
+SCRUM-162 (PETC-507)
+
+### Chapter / Role
+Chapter 11 — Monitoring & QA Engineer
+
+### Work Completed Today
+- Moved SCRUM-162 to Sprint 2
+- vets-service confirmed UP in Spring Boot Admin
+- Updated all 2 subtasks in Jira with comments and screenshots
+
+### Blockers
+- Full vet list QA pending domain name from Oladayo
+
+### Next Plan
+- Continue SCRUM-171 (PETC-607) — Monitor visits-service + QA circuit breaker
