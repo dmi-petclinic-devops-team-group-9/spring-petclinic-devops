@@ -39,3 +39,33 @@ Chapter 11 — Monitoring, QA Testing, and Final Demo Engineer
 - Run JMeter load test and verify Grafana counters
 - Check Zipkin traces for full request chain
 - Set up Azure Monitor alert for CrashLoopBackOff
+
+---
+
+## Date: 12-May-2026
+
+### Jira Task ID
+SCRUM-135 (PETC-107), SCRUM-141 (PETC-207)
+
+### Chapter / Role
+Chapter 11 — Monitoring & QA Engineer
+
+### Work Completed Today
+- Connected to AKS cluster aks-petclinic11-dev
+- Verified 2 nodes — both in Ready state
+- Verified all 8 pods Running 1/1 in petclinic namespace
+- Port-forwarded Spring Boot Admin — config-server and discovery-server confirmed UP
+- Verified Azure Monitor (AMA metrics) running in kube-system
+- Captured live CPU/Memory metrics for all 8 pods via kubectl top
+- Confirmed Zipkin, Prometheus and Grafana are not deployed — raised with Yinusa 
+- Updated SCRUM-135 and SCRUM-141 subtasks in Jira with comments and screenshots
+- Moved SCRUM-141 to Sprint 2
+
+### Blockers
+- Prometheus not deployed — PETC-107b, PETC-207b blocked
+- Zipkin not deployed — PETC-107c, PETC-207c blocked
+- PETC-107d, 107e, 207c, 207d pending Ikedimma approval
+
+### Next Plan
+- Continue SCRUM-146 (PETC-307) — Monitor api-gateway + end-to-end QA
+- Deploy Prometheus, Grafana, Zipkin once Yinusa action
