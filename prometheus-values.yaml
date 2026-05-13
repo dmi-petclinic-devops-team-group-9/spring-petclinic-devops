@@ -1,0 +1,25 @@
+extraScrapeConfigs: |
+  - job_name: 'petclinic-api-gateway'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['api-gateway.petclinic.svc.cluster.local:8080']
+
+  - job_name: 'petclinic-customers-service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['customers-service.petclinic.svc.cluster.local:8081']
+
+  - job_name: 'petclinic-vets-service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['vets-service.petclinic.svc.cluster.local:8083']
+
+  - job_name: 'petclinic-visits-service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['visits-service.petclinic.svc.cluster.local:8082']
+
+  - job_name: 'petclinic-genai-service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['genai-service.petclinic.svc.cluster.local:8084']
