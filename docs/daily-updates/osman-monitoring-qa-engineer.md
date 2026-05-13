@@ -185,3 +185,31 @@ Chapter 11 — Monitoring & QA Engineer
 
 ### Next Plan
 - Continue SCRUM-180 (PETC-807) — Full monitoring stack + Azure Monitor alerts
+
+---
+
+## Date: 13-May-2026
+
+### Jira Task ID
+SCRUM-180 (PETC-807)
+
+### Chapter / Role
+Chapter 11 — Monitoring & QA Engineer
+
+### Work Completed Today
+- Moved SCRUM-180 to Sprint 2
+- All 8 services confirmed UP in Spring Boot Admin — screenshot attached
+- Updated all 5 subtasks in Jira with comments and screenshots
+- genai-service pod temporarily missing from cluster — raised with Olanrewaju
+
+### Blockers
+- Grafana not deployed — PETC-807b and PETC-807c blocked
+- Zipkin not deployed — PETC-807d blocked
+- Azure Monitor alert pending Prometheus/Grafana deployment — PETC-807e blocked
+- genai-service pod missing from cluster — pending Olanrewaju fix
+
+### Next Plan
+- Wait for Yinusa to deploy Prometheus, Grafana and Zipkin
+- Wait for Olanrewaju to fix and redeploy genai-service
+- Complete all blocked subtasks once tools are deployed
+- Re-run full QA checklist once domain name confirmed by Oladayo
