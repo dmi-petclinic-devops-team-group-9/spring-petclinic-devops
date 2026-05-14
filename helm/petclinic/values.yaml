@@ -55,7 +55,7 @@ visitsService:
 genaiService:
   replicaCount: 1
   image:
-    repository: petclinic11acr.azurecr.io/spring-petclinic-genai-service
+    repository: petclinic11acr.azurecr.io/petclinic/spring-petclinic-genai-service
     tag: latest
   service:
     port: 8084
