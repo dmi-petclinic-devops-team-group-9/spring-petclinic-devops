@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customers-service
+  namespace: petclinic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: customers-service
+  template:
+    metadata:
+      labels:
+        app: customers-service
+    spec:
+      imagePullSecrets:
+      - name: acr-secret
+      containers:
+      - name: customers-service
+        image: petclinic11acr.azurecr.io/spring-petclinic-customers-service:latest
+        env:
+        - name: SPRING_CONFIG_IMPORT
+          value: "configserver:http://config-server:8888"
+        - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+          value: "http://discovery-server:8761/eureka/"
+        # Logical "Depends On": Readiness probe ensures traffic only flows when app is ready
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8081
+          initialDelaySeconds: 30
