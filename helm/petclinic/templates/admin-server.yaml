@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: admin-server
+  labels:
+    app: admin-server
+    tier: backend
+    environment: dev
+spec:
+  replicas: {{ .Values.adminServer.replicaCount }}
+  selector:
+    matchLabels:
+      app: admin-server
+  template:
+    metadata:
+      labels:
+        app: admin-server
+        tier: backend
+    spec:
+      containers:
+      - name: admin-server
+        image: "{{ .Values.adminServer.image.repository }}:{{ .Values.adminServer.image.tag }}"
+        ports:
+        - containerPort: {{ .Values.adminServer.service.port }}
+
+        # SERVICE COMMUNICATION
+        env:
+        - name: SPRING_CLOUD_CONFIG_URI
+          value: http://config-server:8888
+
+        - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+          value: http://discovery-server:8761/eureka
+
+        # HEALTH CHECKS
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: {{ .Values.adminServer.service.port}}
+          initialDelaySeconds: 40
+          periodSeconds: 10
+
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: {{ .Values.adminServer.service.port}}
+          initialDelaySeconds: 70
+          periodSeconds: 15
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: admin-server
+  labels:
+    app: admin-server
+    tier: backend
+spec:
+  selector:
+    app: admin-server
+  ports:
+    - port: {{ .Values.adminServer.service.port }}
+      targetPort: {{ .Values.adminServer.service.port }}
+  type: ClusterIP

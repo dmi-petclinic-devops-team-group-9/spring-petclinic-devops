@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: visits-service
+  labels:
+    app: visits-service
+    tier: backend
+    environment: dev
+spec:
+  replicas: {{ .Values.visitsService.replicaCount }}
+  selector:
+    matchLabels:
+      app: visits-service
+  template:
+    metadata:
+      labels:
+        app: visits-service
+        tier: backend
+    spec:
+      containers:
+      - name: visits-service
+        image: "{{ .Values.visitsService.image.repository }}:{{ .Values.visitsService.image.tag }}"
+        ports:
+        - containerPort: {{ .Values.visitsService.service.port }}
+
+        # SERVICE COMMUNICATION
+        env:
+        - name: SPRING_CLOUD_CONFIG_URI
+          value: http://config-server:8888
+
+        - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+          value: http://discovery-server:8761/eureka
+
+        # DATABASE
+        - name: SPRING_DATASOURCE_URL
+          value: jdbc:hsqldb:mem:testdb
+
+        # HEALTH CHECKS
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: {{ .Values.visitsService.service.port}}
+          initialDelaySeconds: 40
+          periodSeconds: 10
+
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: {{ .Values.visitsService.service.port}}
+          initialDelaySeconds: 70
+          periodSeconds: 15
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: visits-service
+  labels:
+    app: visits-service
+    tier: backend
+spec:
+  selector:
+    app: visits-service
+  ports:
+    - port: {{ .Values.visitsService.service.port }}
+      targetPort: {{ .Values.visitsService.service.port }}
+  type: ClusterIP

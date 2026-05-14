@@ -1,0 +1,49 @@
+# Config Server MUST start first
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-server
+spec:
+  replicas: {{ .Values.configServer.replicaCount }}
+  selector:
+    matchLabels:
+      app: config-server
+  template:
+    metadata:
+      labels:
+        app: config-server
+    spec:
+      containers:
+      - name: config-server
+        image: "{{ .Values.configServer.image.repository }}:{{ .Values.configServer.image.tag }}"
+        ports:
+        - containerPort: {{ .Values.configServer.service.port }}
+
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: {{ .Values.configServer.service.port }}
+          initialDelaySeconds: 30
+          periodSeconds: 10
+
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: {{ .Values.configServer.service.port }}
+          initialDelaySeconds: 60
+          periodSeconds: 15  
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: config-server
+  labels:
+    app: config-server
+spec:
+  selector:
+    app: config-server
+  ports:
+    - port: {{ .Values.configServer.service.port }}
+      targetPort: {{ .Values.configServer.service.port }}
+  type: {{ .Values.configServer.service.type }}
