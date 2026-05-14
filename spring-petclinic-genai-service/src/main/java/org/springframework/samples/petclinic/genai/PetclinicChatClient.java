@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Mono;
 
 /**
  * This REST controller is being invoked by the in order to interact with the LLM
@@ -55,18 +56,17 @@ public class PetclinicChatClient {
   }
 
   @PostMapping("/chatclient")
-  public String exchange(@RequestBody String query) {
-	  try {
-		  //All chatbot messages go through this endpoint
-		  //and are passed to the LLM
-		  return this.chatClient
-              .prompt()
-              .user(query)
-              .call()
-              .content();
-	  } catch (Exception exception) {
-          LOG.error("Error processing chat message", exception);
- 	      return "Chat is currently unavailable. Please try again later.";
-	  }
-  }
+public Mono<String> exchange(@RequestBody String query) {
+    return Mono.fromCallable(() ->
+            this.chatClient
+                .prompt()
+                .user(query)
+                .call()
+                .content()
+    )
+    .subscribeOn(reactor.core.scheduler.Schedulers.boundedElastic())
+    .doOnError(e -> LOG.error("Error processing chat message", e))
+    .onErrorReturn("Chat is currently unavailable. Please try again later.");
+}
+
 }
