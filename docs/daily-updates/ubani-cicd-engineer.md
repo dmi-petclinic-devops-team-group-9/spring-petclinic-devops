@@ -1,14 +1,15 @@
-## Date: 11-May-2026
+## Date: 14-May-2026
 
 ### Jira Task ID
-PETC-204 (discovery-server pipeline)
+PETC-304 (api-gateway pipeline)
 
 ### Chapter / Role
 Azure Pipelines CI/CD Engineer
 
 ### Work Completed Today
-- Confirmed spring-petclinic-discovery-server in Maven build stage in azure-pipelines.yml
-- Confirmed discovery-server image in Docker push stage in pipeline
+- Confirmed spring-petclinic-api-gateway in Maven build stage in azure-pipelines.yml
+- Confirmed api-gateway image in Docker push stage in pipeline
+- Noted api-gateway is user-facing — manual approval gate recommended before production deploy
 - Pipeline run #20260510.13 — Build and Test passed successfully
 - Docker Build and Push passed successfully
 
@@ -21,4 +22,4 @@ None.
 
 ### Next Plan
 - Continue with remaining service pipeline tickets
-- Run pipeline on main to trigger Deploy to AKS stage
+- Run pipeline on develop to trigger Deploy to AKS stage
