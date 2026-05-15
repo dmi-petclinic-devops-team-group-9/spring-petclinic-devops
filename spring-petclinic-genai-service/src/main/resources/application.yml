@@ -4,7 +4,7 @@ spring:
   application:
     name: genai-service
   profiles:
-    active: production
+    active: azure
   config:
     import: optional:configserver:${CONFIG_SERVER_URL:http://localhost:8888/},optional:classpath:/creds.yaml
   ai:
