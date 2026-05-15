@@ -259,3 +259,27 @@ Chapter 11 — Monitoring & QA Engineer
 - Port-forward Spring Boot Admin and verify all 8 services show UP
 - Port-forward Prometheus and verify all targets show State=UP
 - Run JMeter load test and verify Grafana counters
+
+---
+
+## Date: 15-May-2026
+
+### Jira Task ID
+SCRUM-141 (PETC-207)
+
+### Chapter / Role
+Chapter 11 — Monitoring & QA Engineer
+
+### Work Completed Today
+- PETC-207a — discovery-server confirmed UP in Spring Boot Admin
+- PETC-207b — Prometheus confirmed scraping all 5 petclinic services State=UP
+- PETC-207c — QA test: stopped discovery-server — api-gateway confirmed Connection refused to discovery-server:8761 — dependency proven
+- PETC-207d — Recovery test: discovery-server restarted — all 6 services re-registered in Eureka within 34 seconds — verified via Eureka dashboard
+- Updated all 4 subtasks in Jira with comments and screenshots
+- SCRUM-141 moved to Done
+
+### Blockers
+- None for this ticket
+
+### Next Plan
+- Continue SCRUM-146 (PETC-307) — Monitor api-gateway + end-to-end QA
