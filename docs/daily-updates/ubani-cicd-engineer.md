@@ -1,17 +1,19 @@
-## Date: 14-May-2026
+## Date: 15-May-2026
 
 ### Jira Task ID
-PETC-304 (api-gateway pipeline)
+PETC-804 (config-server pipeline)
 
 ### Chapter / Role
 Azure Pipelines CI/CD Engineer
 
 ### Work Completed Today
-- Confirmed spring-petclinic-api-gateway in Maven build stage in azure-pipelines.yml
-- Confirmed api-gateway image in Docker push stage in pipeline
-- Noted api-gateway is user-facing — manual approval gate recommended before production deploy
-- Pipeline run #20260510.13 — Build and Test passed successfully
-- Docker Build and Push passed successfully
+- Confirmed spring-petclinic-config-server in Maven build stage in azure-pipelines.yml
+- Confirmed config-server image in Docker push stage in pipeline
+- Pipeline run #20260515.1 — all 3 stages passing on develop
+- Stage 1: Build and Test All Microservices — PASSED
+- Stage 2: Build and Push Docker Images to ACR — PASSED
+- Stage 3: Deploy to AKS using Helm — PASSED
+- All 8 PETC tickets completed for Azure Pipelines CI/CD Engineer role
 
 ### Files Updated
 - azure-pipelines.yml
@@ -21,5 +23,4 @@ Azure Pipelines CI/CD Engineer
 None.
 
 ### Next Plan
-- Continue with remaining service pipeline tickets
-- Run pipeline on develop to trigger Deploy to AKS stage
+- All tickets complete — awaiting Benjamin's final review and merge
