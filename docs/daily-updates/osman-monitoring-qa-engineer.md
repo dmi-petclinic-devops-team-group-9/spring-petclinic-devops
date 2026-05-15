@@ -213,3 +213,26 @@ Chapter 11 — Monitoring & QA Engineer
 - Wait for Olanrewaju to fix and redeploy genai-service
 - Complete all blocked subtasks once tools are deployed
 - Re-run full QA checklist once domain name confirmed by Oladayo
+
+---
+
+## Date: 15-May-2026
+
+### Jira Task ID
+SCRUM-135 (PETC-107)
+
+### Chapter / Role
+Chapter 11 — Monitoring & QA Engineer
+
+### Work Completed Today
+- PETC-107b — Prometheus confirmed scraping all 5 petclinic services — State=UP verified
+- PETC-107d — QA test: stopped config-server and restarted customers-service — confirmed ConfigClientFailFastException — dependency proven
+- PETC-107e — Recovery test: restarted config-server and customers-service — confirmed startup in 12.682 seconds — resilience proven
+- Grafana SpringBoot APM Dashboard imported and confirmed showing live data
+- Updated SCRUM-137, SCRUM-139, SCRUM-140 to Done in Jira with screenshots
+
+### Blockers
+- PETC-107c (Zipkin) — waiting for live app to be fixed by Oladayo
+
+### Next Plan
+- Continue SCRUM-141 (PETC-207) — Monitor discovery-server
