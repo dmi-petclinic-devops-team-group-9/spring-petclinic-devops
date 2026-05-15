@@ -283,3 +283,29 @@ Chapter 11 — Monitoring & QA Engineer
 
 ### Next Plan
 - Continue SCRUM-146 (PETC-307) — Monitor api-gateway + end-to-end QA
+
+---
+
+## Date: 15-May-2026
+
+### Jira Task ID
+SCRUM-151 (PETC-407), SCRUM-162 (PETC-507), SCRUM-171 (PETC-607)
+
+### Chapter / Role
+Chapter 11 — Monitoring & QA Engineer
+
+### Work Completed Today
+- PETC-407e — Grafana SpringBoot APM Dashboard confirmed with live data — Done
+- PETC-607c — QA circuit breaker test: stopped visits-service — api-gateway continued gracefully — circuit breaker confirmed working — visits-service recovered in 43 seconds
+- PETC-607d — Grafana dashboard confirmed with live data — Done
+- Updated all subtasks in Jira with comments and screenshots
+
+### Blockers
+- PETC-307b, 307c, 307d — pending live app fix by Oladayo
+- PETC-407b, 407c, 407d — pending live app fix by Oladayo
+- PETC-507b — pending live app fix by Oladayo
+- PETC-607b — pending live app fix by Oladayo
+
+### Next Plan
+- Continue SCRUM-176 (PETC-707) — Monitor genai-service
+- Continue SCRUM-180 (PETC-807) — Full monitoring stack
