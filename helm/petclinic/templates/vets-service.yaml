@@ -19,7 +19,9 @@ spec:
     spec:
       containers:
       - name: vets-service
-        image: "{{ .Values.vetsService.image.repository }}:{{ .Values.vetsService.image.tag }}"
+        image: "{{ .Values.global.registry }}/{{ .Values.vetsService.image }}:{{ .Values.vetsService.tag }}"
+        resources:
+          {{- toYaml .Values.vetsService.resources | nindent 10 }}
         ports:
         - containerPort: {{ .Values.vetsService.service.port }}
 
