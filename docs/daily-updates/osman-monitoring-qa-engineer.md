@@ -309,3 +309,37 @@ Chapter 11 — Monitoring & QA Engineer
 ### Next Plan
 - Continue SCRUM-176 (PETC-707) — Monitor genai-service
 - Continue SCRUM-180 (PETC-807) — Full monitoring stack
+
+---
+
+## Date: 16-May-2026
+
+### Jira Task ID
+SCRUM-146 (PETC-307), SCRUM-151 (PETC-407), SCRUM-162 (PETC-507), SCRUM-171 (PETC-607), SCRUM-176 (PETC-707), SCRUM-180 (PETC-807)
+
+### Chapter / Role
+Chapter 11 — Monitoring & QA Engineer
+
+### Work Completed Today
+- PETC-307b — JMeter load test executed — 542 requests sent — Grafana counters confirmed live
+- PETC-307d — QA checklist completed — owners list, owner detail, vet list and add pet verified
+- PETC-407b — New owner created and verified in owners list
+- PETC-407c — Owner edited and changes confirmed saved
+- PETC-407d — New pet added to owner and confirmed appearing
+- PETC-507b — Vet list verified showing all vets with specialties
+- PETC-607b — New visit added to pet and confirmed saved
+- PETC-607c — Circuit breaker test completed — owner page loads gracefully without visits-service
+- PETC-707b — Chatbot confirmed returning real owner names for "Who has dogs?"
+- PETC-707c — Chatbot confirmed returning real vet names for "Are there vets specialising in surgery?"
+- PETC-807b — Spring PetClinic Business Metrics dashboard confirmed live in Grafana
+- PETC-807c — JMeter load test confirmed all 4 Grafana counters incrementing
+- App domain name confirmed: http://www.petclinic-devops-group9.online
+- Updated all Jira subtasks and main tickets with comments and screenshots
+
+### Blockers
+- PETC-107c, 307c, 807d — Zipkin traces — services not sending traces
+- PETC-807e — Azure Monitor alert
+
+### Next Plan
+- Complete PETC-807e Azure Monitor alert
+- Complete Zipkin traces — PETC-107c, 307c, 807d
