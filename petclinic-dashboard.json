@@ -1,0 +1,81 @@
+{
+  "title": "Spring PetClinic Business Metrics",
+  "uid": "petclinic-business",
+  "timezone": "browser",
+  "schemaVersion": 38,
+  "version": 1,
+  "refresh": "10s",
+  "panels": [
+    {
+      "id": 1,
+      "title": "Owners Created",
+      "type": "stat",
+      "gridPos": { "h": 6, "w": 6, "x": 0, "y": 0 },
+      "options": { "reduceOptions": { "calcs": ["sum"] }, "colorMode": "background", "graphMode": "area" },
+      "fieldConfig": { "defaults": { "color": { "mode": "fixed", "fixedColor": "green" }, "unit": "short", "displayName": "Owners Created" } },
+      "targets": [{ "expr": "sum(petclinic_owner_seconds_count{method=\"createOwner\"})", "legendFormat": "Owners Created", "refId": "A" }]
+    },
+    {
+      "id": 2,
+      "title": "Owners Updated",
+      "type": "stat",
+      "gridPos": { "h": 6, "w": 6, "x": 6, "y": 0 },
+      "options": { "reduceOptions": { "calcs": ["sum"] }, "colorMode": "background", "graphMode": "area" },
+      "fieldConfig": { "defaults": { "color": { "mode": "fixed", "fixedColor": "blue" }, "unit": "short", "displayName": "Owners Updated" } },
+      "targets": [{ "expr": "sum(petclinic_owner_seconds_count{method=\"updateOwner\"})", "legendFormat": "Owners Updated", "refId": "A" }]
+    },
+    {
+      "id": 3,
+      "title": "Pets Created",
+      "type": "stat",
+      "gridPos": { "h": 6, "w": 6, "x": 12, "y": 0 },
+      "options": { "reduceOptions": { "calcs": ["sum"] }, "colorMode": "background", "graphMode": "area" },
+      "fieldConfig": { "defaults": { "color": { "mode": "fixed", "fixedColor": "orange" }, "unit": "short", "displayName": "Pets Created" } },
+      "targets": [{ "expr": "sum(petclinic_pet_seconds_count{method=\"processCreationForm\"})", "legendFormat": "Pets Created", "refId": "A" }]
+    },
+    {
+      "id": 4,
+      "title": "Visits Created",
+      "type": "stat",
+      "gridPos": { "h": 6, "w": 6, "x": 18, "y": 0 },
+      "options": { "reduceOptions": { "calcs": ["sum"] }, "colorMode": "background", "graphMode": "area" },
+      "fieldConfig": { "defaults": { "color": { "mode": "fixed", "fixedColor": "purple" }, "unit": "short", "displayName": "Visits Created" } },
+      "targets": [{ "expr": "sum(petclinic_visit_seconds_count{method=\"create\"})", "legendFormat": "Visits Created", "refId": "A" }]
+    },
+    {
+      "id": 5,
+      "title": "Business Counters Over Time",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 6 },
+      "options": { "legend": { "displayMode": "list", "placement": "bottom" }, "tooltip": { "mode": "multi" } },
+      "fieldConfig": { "defaults": { "unit": "short", "custom": { "lineWidth": 2 } } },
+      "targets": [
+        { "expr": "sum(petclinic_owner_seconds_count{method=\"createOwner\"})", "legendFormat": "Owners Created", "refId": "A" },
+        { "expr": "sum(petclinic_owner_seconds_count{method=\"updateOwner\"})", "legendFormat": "Owners Updated", "refId": "B" },
+        { "expr": "sum(petclinic_pet_seconds_count{method=\"processCreationForm\"})", "legendFormat": "Pets Created", "refId": "C" },
+        { "expr": "sum(petclinic_visit_seconds_count{method=\"create\"})", "legendFormat": "Visits Created", "refId": "D" }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "HTTP Request Rate — All PetClinic Services",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 14 },
+      "options": { "legend": { "displayMode": "list", "placement": "bottom" } },
+      "fieldConfig": { "defaults": { "unit": "reqps", "custom": { "lineWidth": 2 } } },
+      "targets": [{ "expr": "sum(rate(http_server_requests_seconds_count[1m])) by (job)", "legendFormat": "{{job}}", "refId": "A" }]
+    },
+    {
+      "id": 7,
+      "title": "HTTP Response Time (p99) — All Services",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 14 },
+      "options": { "legend": { "displayMode": "list", "placement": "bottom" } },
+      "fieldConfig": { "defaults": { "unit": "s", "custom": { "lineWidth": 2 } } },
+      "targets": [{ "expr": "histogram_quantile(0.99, sum(rate(http_server_requests_seconds_bucket[1m])) by (le, job))", "legendFormat": "p99 {{job}}", "refId": "A" }]
+    }
+  ],
+  "templating": { "list": [] },
+  "annotations": { "list": [] },
+  "time": { "from": "now-1h", "to": "now" }
+}
