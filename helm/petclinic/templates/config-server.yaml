@@ -15,7 +15,9 @@ spec:
     spec:
       containers:
       - name: config-server
-        image: "{{ .Values.configServer.image.repository }}:{{ .Values.configServer.image.tag }}"
+        image: "{{ .Values.global.registry }}/{{ .Values.configServer.image }}:{{ .Values.configServer.tag }}"
+        resources:
+          {{- toYaml .Values.vetsService.resources | nindent 10 }}
         ports:
         - containerPort: {{ .Values.configServer.service.port }}
 

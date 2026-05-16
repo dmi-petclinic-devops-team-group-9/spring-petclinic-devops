@@ -19,7 +19,9 @@ spec:
     spec:
       containers:
       - name: admin-server
-        image: "{{ .Values.adminServer.image.repository }}:{{ .Values.adminServer.image.tag }}"
+        image: "{{ .Values.global.registry }}/{{ .Values.adminServer.image }}:{{ .Values.global.tag }}"
+        resources:
+          {{- toYaml .Values.vetsService.resources | nindent 10 }}
         ports:
         - containerPort: {{ .Values.adminServer.service.port }}
 

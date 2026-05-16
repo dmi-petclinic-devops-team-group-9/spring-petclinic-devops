@@ -3,7 +3,7 @@ global:
   registry: petclinic11acr.azurecr.io
   imagePullSecret: acr-secret
   namespace: petclinic
-
+  tag: latest
 # Common resource profiles to keep the nodes healthy
 # Java apps generally need at least 512Mi to start safely
 profiles:
@@ -26,8 +26,13 @@ configServer:
   replicaCount: 1
   image: spring-petclinic-config-server
   tag: latest
-  resources: 
-    {{- toYaml .Values.profiles.infra | nindent 4 }}
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "512Mi"
+    limits:
+      cpu: "500m"
+      memory: "768Mi"
   service:
     port: 8888
     type: ClusterIP
@@ -36,8 +41,13 @@ discoveryServer:
   replicaCount: 1
   image: spring-petclinic-discovery-server
   tag: latest
-  resources: 
-    {{- toYaml .Values.profiles.infra | nindent 4 }}
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "512Mi"
+    limits:
+      cpu: "500m"
+      memory: "768Mi"
   service:
     port: 8761
     type: ClusterIP
@@ -46,8 +56,13 @@ apiGateway:
   replicaCount: 1
   image: spring-petclinic-api-gateway
   tag: latest
-  resources: 
-    {{- toYaml .Values.profiles.apps | nindent 4 }}
+  resources:
+    requests:
+      cpu: "200m"
+      memory: "768Mi"
+    limits:
+      cpu: "800m"
+      memory: "1Gi"
   service:
     port: 80
     targetPort: 8080
@@ -57,8 +72,13 @@ customersService:
   replicaCount: 1
   image: spring-petclinic-customers-service
   tag: latest
-  resources: 
-    {{- toYaml .Values.profiles.apps | nindent 4 }}
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "768Mi"
+    limits:
+      cpu: "500m"
+      memory: "1Gi"
   service:
     port: 8081
     type: ClusterIP
@@ -67,8 +87,13 @@ vetsService:
   replicaCount: 1
   image: spring-petclinic-vets-service
   tag: latest
-  resources: 
-    {{- toYaml .Values.profiles.apps | nindent 4 }}
+  resources:
+    requests:
+      cpu: "150m"
+      memory: "768Mi"
+    limits:
+      cpu: "500m"
+      memory: "1Gi"
   service:
     port: 8083
     type: ClusterIP
@@ -77,8 +102,13 @@ visitsService:
   replicaCount: 1
   image: spring-petclinic-visits-service
   tag: latest
-  resources: 
-    {{- toYaml .Values.profiles.apps | nindent 4 }}
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "768Mi"
+    limits:
+      cpu: "500m"
+      memory: "768Mi"
   service:
     port: 8082
     type: ClusterIP
@@ -87,8 +117,13 @@ genaiService:
   replicaCount: 1
   image: spring-petclinic-genai-service
   tag: latest
-  resources: 
-    {{- toYaml .Values.profiles.apps | nindent 4 }}
+  resources:
+    requests:
+      cpu: "150m"
+      memory: "768Mi"
+    limits:
+      cpu: "800m"
+      memory: "1Gi"
   service:
     port: 8084
     type: ClusterIP
@@ -97,8 +132,13 @@ adminServer:
   replicaCount: 1
   image: spring-petclinic-admin-server
   tag: latest
-  resources: 
-    {{- toYaml .Values.profiles.infra | nindent 4 }}
+  resources:
+    requests:
+      cpu: "150m"
+      memory: "768Mi"
+    limits:
+      cpu: "500m"
+      memory: "1Gi"
   service:
     port: 9090
     type: ClusterIP
