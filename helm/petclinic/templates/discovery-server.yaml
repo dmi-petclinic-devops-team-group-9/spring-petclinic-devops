@@ -29,7 +29,9 @@ spec:
     spec:
       containers:
       - name: discovery-server
-        image: "{{ .Values.discoveryServer.image.repository }}:{{ .Values.discoveryServer.image.tag }}"
+        image: "{{ .Values.global.registry }}/{{ .Values.discoveryServer.image }}:{{ .Values.discoveryServer.tag }}"
+        resources:
+          {{- toYaml .Values.vetsService.resources | nindent 10 }}
         ports:
         - containerPort: {{ .Values.discoveryServer.service.port }}
         

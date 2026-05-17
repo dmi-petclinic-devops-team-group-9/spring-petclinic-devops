@@ -19,7 +19,9 @@ spec:
     spec:
       containers:
       - name: visits-service
-        image: "{{ .Values.visitsService.image.repository }}:{{ .Values.visitsService.image.tag }}"
+        image: "{{ .Values.global.registry }}/{{ .Values.visitsService.image }}:{{ .Values.visitsService.tag }}"
+        resources:
+          {{- toYaml .Values.visitsService.resources | nindent 10 }}
         ports:
         - containerPort: {{ .Values.visitsService.service.port }}
 

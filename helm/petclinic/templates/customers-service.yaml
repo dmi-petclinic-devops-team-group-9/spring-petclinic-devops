@@ -19,7 +19,9 @@ spec:
     spec:
       containers:
       - name: customers-service
-        image: "{{ .Values.customersService.image.repository }}:{{ .Values.customersService.image.tag }}"
+        image: "{{ .Values.global.registry }}/{{ .Values.customersService.image }}:{{ .Values.global.tag }}"
+        resources:
+          {{- toYaml .Values.vetsService.resources | nindent 10 }}
         ports:
         - containerPort: {{ .Values.customersService.service.port }}
 
