@@ -1,7 +1,59 @@
+#apiVersion: v1
+#kind: Service
+#metadata:
+ # name: genai-service
+#spec:
+ # selector:
+  #  app: genai-service
+  #ports:
+   # - port: {{ .Values.genaiService.service.port }}
+    #  targetPort: {{ .Values.genaiService.service.port }}
+  #type: {{ .Values.genaiService.service.type }}
+
+#---
+#apiVersion: apps/v1
+#kind: Deployment
+#metadata:
+ # name: genai-service
+#spec:
+ # replicas: {{ .Values.genaiService.replicaCount }}
+  #selector:
+   # matchLabels:
+    #  app: genai-service
+  #template:
+   # metadata:
+    #  labels:
+     #   app: genai-service
+    #spec:
+     # containers:
+      #- name: genai-service
+       # image: "{{ .Values.global.registry }}/{{ .Values.genaiService.image }}:{{ .Values.global.tag }}"
+        #resources:
+         # {{- toYaml .Values.vetsService.resources | nindent 10 }}
+        #ports:
+       # - containerPort: {{ .Values.genaiService.service.port }}
+
+        #readinessProbe:
+         # httpGet:
+          #  path: /actuator/health
+           # port: {{ .Values.genaiService.service.port }}
+          #initialDelaySeconds: 30
+          #periodSeconds: 10
+
+       # livenessProbe:
+        #  httpGet:
+         #   path: /actuator/health
+          #  port: {{ .Values.genaiService.service.port }}
+         # initialDelaySeconds: 60
+          #periodSeconds: 15
+
 apiVersion: v1
 kind: Service
 metadata:
   name: genai-service
+  labels:
+    app: genai-service
+    app.kubernetes.io/managed-by: Helm
 spec:
   selector:
     app: genai-service
@@ -15,6 +67,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: genai-service
+  labels:
+    app: genai-service
 spec:
   replicas: {{ .Values.genaiService.replicaCount }}
   selector:
@@ -27,7 +81,9 @@ spec:
     spec:
       containers:
       - name: genai-service
-        image: "{{ .Values.genaiService.image.repository }}:{{ .Values.genaiService.image.tag }}"
+        image: "{{ .Values.global.registry }}/{{ .Values.genaiService.image }}:{{ .Values.global.tag }}"
+        resources:
+          {{- toYaml .Values.genaiService.resources | nindent 10 }}
         ports:
         - containerPort: {{ .Values.genaiService.service.port }}
 
@@ -44,3 +100,8 @@ spec:
             port: {{ .Values.genaiService.service.port }}
           initialDelaySeconds: 60
           periodSeconds: 15
+
+        # Automatically maps all key-value pairs from openai-secret into environment variables
+        envFrom:
+        - secretRef:
+            name: openai-secret
