@@ -343,3 +343,29 @@ Chapter 11 — Monitoring & QA Engineer
 ### Next Plan
 - Complete PETC-807e Azure Monitor alert
 - Complete Zipkin traces — PETC-107c, 307c, 807d
+
+---
+
+## Date: 17-May-2026
+
+### Jira Task ID
+SCRUM-180 (PETC-807)
+
+### Chapter / Role
+Chapter 11 — Monitoring & QA Engineer
+
+### Work Completed Today
+- PETC-807e — Azure Monitor alert rule created and enabled
+- Alert name: PetClinic-AKS-CrashLoopBackOff-Alert
+- Condition: KubePodInventory CrashLoopBackOff in petclinic namespace
+- Severity: 2 - Warning
+- Action group: PetClinic-CrashLoop-AG — email notification configured
+- Location: West Europe
+- Target: aks-petclinic11-dev
+- Updated SCRUM-180 subtask and main ticket in Jira
+
+### Blockers
+- PETC-107c, 307c, 807d — Zipkin traces — waiting for Yinusa
+
+### Next Plan
+- Complete Zipkin traces once Yinusa fixes service configuration
