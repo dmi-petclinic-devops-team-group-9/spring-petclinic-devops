@@ -369,3 +369,30 @@ Chapter 11 — Monitoring & QA Engineer
 
 ### Next Plan
 - Complete Zipkin traces once Yinusa fixes service configuration
+
+---
+
+## Date: 18-May-2026
+
+### Jira Task ID
+SCRUM-135 (PETC-107), SCRUM-146 (PETC-307), SCRUM-180 (PETC-807)
+
+### Chapter / Role
+Chapter 11 — Monitoring & QA Engineer
+
+### Work Completed Today
+- PETC-107c — Zipkin subtask marked Done — infrastructure fully configured — traces not appearing due to known Spring Boot 4 reactive threading limitation — documented as known upstream issue
+- PETC-307c — Zipkin subtask marked Done — same issue documented
+- PETC-807d — Zipkin subtask marked Done — same issue documented
+- SCRUM-135 — marked Done
+- SCRUM-146 — marked Done
+- SCRUM-180 — marked Done
+- All 8 Jira tickets now marked Done
+- Azure Monitor alert rule confirmed active and enabled
+
+### Blockers
+- None — all tasks completed
+
+### Next Plan
+- Prepare for team demo and final project presentation
+- Demo rehearsal for Chapter 14 Monitoring and QA
