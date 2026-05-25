@@ -10,12 +10,12 @@
         <collectionProp name="Arguments.arguments">
           <elementProp name="PETCLINC_HOST" elementType="Argument">
             <stringProp name="Argument.name">PETCLINC_HOST</stringProp>
-            <stringProp name="Argument.value">20.13.61.180</stringProp>
+            <stringProp name="Argument.value">www.petclinic-devops-group9.online</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="PETCLINIC_PORT" elementType="Argument">
             <stringProp name="Argument.name">PETCLINIC_PORT</stringProp>
-            <stringProp name="Argument.value">80</stringProp>
+            <stringProp name="Argument.value">8080</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
