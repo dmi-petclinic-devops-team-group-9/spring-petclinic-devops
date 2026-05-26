@@ -9,7 +9,7 @@ spec:
     app: api-gateway
   ports:
     - port: {{ .Values.apiGateway.service.port }}
-      targetPort: {{ .Values.apiGateway.service.port }}
+      targetPort: {{ .Values.apiGateway.service.targetPort }}
   type: {{ .Values.apiGateway.service.type }}
 
 ---
@@ -29,28 +29,33 @@ spec:
     spec:
       containers:
       - name: api-gateway
-        image: "{{ .Values.apiGateway.image.repository }}:{{ .Values.apiGateway.image.tag }}"
+        image: "{{ .Values.global.registry }}/{{ .Values.apiGateway.image }}:{{ .Values.global.tag }}"
+        resources: {{- toYaml .Values.apiGateway.resources | nindent 10 }}
         ports:
-        - containerPort: {{ .Values.apiGateway.service.port }}
+        - containerPort: {{ .Values.apiGateway.service.targetPort }}
         
         env:
         - name: SPRING_CLOUD_CONFIG_URI
           value: http://config-server:8888
 
+        - name: MANAGEMENT_ZIPKIN_TRACING_ENDPOINT
+          value: http://zipkin.petclinic.svc.cluster.local:9411/api/v2/spans
+        - name: MANAGEMENT_TRACING_SAMPLING_PROBABILITY
+          value: "1.0"
         - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
           value: http://discovery-server:8761/eureka
 
         readinessProbe:
           httpGet:
             path: /actuator/health
-            port: {{ .Values.apiGateway.service.port}}
-          initialDelaySeconds: 30
-          periodSeconds: 10
+            port: {{ .Values.apiGateway.service.targetPort}}
+          initialDelaySeconds: 90
+          periodSeconds: 15
 
         livenessProbe:
           httpGet:
             path: /actuator/health
-            port: {{ .Values.apiGateway.service.port}}
-          initialDelaySeconds: 60
-          periodSeconds: 15  
+            port: {{ .Values.apiGateway.service.targetPort}}
+          initialDelaySeconds: 120
+          periodSeconds: 15
 

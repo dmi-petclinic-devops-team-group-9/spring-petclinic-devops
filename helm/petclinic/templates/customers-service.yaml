@@ -19,7 +19,9 @@ spec:
     spec:
       containers:
       - name: customers-service
-        image: "{{ .Values.customersService.image.repository }}:{{ .Values.customersService.image.tag }}"
+        image: "{{ .Values.global.registry }}/{{ .Values.customersService.image }}:{{ .Values.global.tag }}"
+        resources:
+          {{- toYaml .Values.vetsService.resources | nindent 10 }}
         ports:
         - containerPort: {{ .Values.customersService.service.port }}
 
@@ -28,6 +30,10 @@ spec:
         - name: SPRING_CLOUD_CONFIG_URI
           value: http://config-server:8888
 
+        - name: MANAGEMENT_ZIPKIN_TRACING_ENDPOINT
+          value: http://zipkin.petclinic.svc.cluster.local:9411/api/v2/spans
+        - name: MANAGEMENT_TRACING_SAMPLING_PROBABILITY
+          value: "1.0"
         - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
           value: http://discovery-server:8761/eureka
 
